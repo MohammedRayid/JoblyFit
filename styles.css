@@ -1,0 +1,421 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #ffffff;
+    transition: background 0.3s, color 0.3s;
+}
+
+body.light-mode {
+    background: linear-gradient(135deg, #ffffff, #f5f5f5);
+    color: #333;
+}
+
+body.analysis-page {
+    height: auto;
+    display: block;
+    padding: 20px;
+}
+
+.container {
+    background: linear-gradient(135deg, #2a2a2a, #1e1e1e);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.container.wide {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #cccccc;
+    font-weight: 600;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: #333;
+    color: #ffffff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #357abd, #2c5aa0);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+}
+
+button:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 10px rgba(74, 144, 226, 0.6);
+}
+
+/* Light mode styles */
+body.light-mode .container {
+    background: linear-gradient(135deg, #ffffff, #f0f0f0);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode h1 {
+    color: #333;
+}
+
+body.light-mode label {
+    color: #555;
+}
+
+body.light-mode input, body.light-mode textarea {
+    background: #ffffff;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+body.light-mode input:focus, body.light-mode textarea:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.light-mode .theme-toggle {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* File input styling */
+input[type="file"] {
+    padding: 8px;
+}
+
+input[type="file"]::file-selector-button {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: #357abd;
+}
+
+/* Message popups */
+.message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.message.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.success {
+    background: #4caf50;
+    color: white;
+}
+
+.error {
+    background: #f44336;
+    color: white;
+}
+
+/* Loading spinner */
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #4a90e2;
+    margin: 0 5px;
+    animation: bounce 1.4s ease-in-out infinite both;
+}
+
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+.dot:nth-child(3) { animation-delay: 0s; }
+.dot:nth-child(4) { animation-delay: 0.16s; }
+.dot:nth-child(5) { animation-delay: 0.32s; }
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+body.light-mode .dot {
+    background: #357abd;
+}
+
+/* Analysis section */
+#analysis {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#analysis.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Analysis content */
+.analysis-content {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px auto;
+    line-height: 1.6;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode .analysis-content {
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Analysis title alignment */
+#analysis h1 {
+    text-align: center;
+    margin-top: 0;
+}
+
+/* Analysis button alignment */
+#analysis button {
+    width: auto;
+    margin: 20px auto;
+    display: block;
+}
+
+/* Analysis text styling */
+#analysisText {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+body.light-mode #analysisText {
+    color: #333;
+}
+
+/* Markdown element styling within analysis */
+#analysisText h1,
+#analysisText h2,
+#analysisText h3,
+#analysisText h4,
+#analysisText h5,
+#analysisText h6 {
+    color: #ffffff;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+body.light-mode #analysisText h1,
+body.light-mode #analysisText h2,
+body.light-mode #analysisText h3,
+body.light-mode #analysisText h4,
+body.light-mode #analysisText h5,
+body.light-mode #analysisText h6 {
+    color: #333;
+}
+
+#analysisText h1 { font-size: 24px; }
+#analysisText h2 { font-size: 20px; }
+#analysisText h3 { font-size: 18px; }
+
+#analysisText strong,
+#analysisText b {
+    font-weight: 600;
+    color: #4a90e2;
+}
+
+body.light-mode #analysisText strong,
+body.light-mode #analysisText b {
+    color: #357abd;
+}
+
+#analysisText em,
+#analysisText i {
+    font-style: italic;
+}
+
+#analysisText ul,
+#analysisText ol {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+#analysisText li {
+    margin-bottom: 5px;
+}
+
+#analysisText code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}
+
+body.light-mode #analysisText code {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#analysisText pre {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+body.light-mode #analysisText pre {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#analysisText blockquote {
+    border-left: 4px solid #4a90e2;
+    padding-left: 10px;
+    margin: 10px 0;
+    font-style: italic;
+}
+
+body.light-mode #analysisText blockquote {
+    border-left-color: #357abd;
+}
+
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .analysis-content {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+/* Loading message alignment */
+#loading p {
+    text-align: center;
+    margin-top: 20px;
+    color: #cccccc;
+}
+
+body.light-mode #loading p {
+    color: #555;
+}

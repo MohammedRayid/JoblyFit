@@ -1,0 +1,184 @@
+{
+  "name": "JoblyFit",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "jobdescription",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        -120
+      ],
+      "id": "876f49c7-365e-4b57-81d7-0d72aadb41e4",
+      "name": "Webhook",
+      "webhookId": "45a107fe-5077-40bb-9167-8942be781958"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert career coach. Compare the following resume with the job description. \nWrite a clear, concise analysis (200–250 words) covering:\n\n1. How well the resume matches the role.\n2. Key strengths and relevant skills that align.\n3. Important skills, experiences, or qualifications that are missing.\n4. Overall fit summary and suggestions for improvement.\n\nRaw Resume text:\n{{ $json.text }}\n\nJob Description:\n{{ $json.body.jobDescription }}\n\nDO NOT RESPOND IN ANY SPECIFIC MARKDOWN FORMATS. SEND A DIRECT AND PLAIN RESPONSE.\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        100,
+        -120
+      ],
+      "id": "dbea1a57-241d-4a68-86e4-21e2e62f1646",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        120
+      ],
+      "id": "77bba77b-085a-404a-8ec9-65ec273bd5cd",
+      "name": "OpenAI Chat Model"
+
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e8c242f3-5fca-45d0-87a7-a28c3bd42346",
+              "name": "body.jobDescription",
+              "value": "={{ $('Webhook').item.json.body.jobDescription }}",
+              "type": "string"
+            },
+            {
+              "id": "149bb4c2-f23a-45b1-90e3-2f215a1a7082",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -160,
+        -120
+      ],
+      "id": "73a374b6-58cd-4de5-a6b9-259bc97e4d20",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "resume",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -420,
+        -120
+      ],
+      "id": "4d2aa956-5dc0-42b9-aadb-29ffff1e238f",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"analysis\": {{JSON.stringify($json[\"output\"])}}\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        620,
+        -120
+      ],
+      "id": "e0f90d2c-714a-4b05-a30d-ecd28067381c",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5e5f8dbe-b03f-41bc-b664-650cae70311e",
+  "meta": {
+    "instanceId": "254cf00f6acc180b34c6bfd8b551df78b132279d28779db624c4b2740c538185"
+  },
+  "id": "PVaQcqc5nm7qhvPT",
+  "tags": []
+}
