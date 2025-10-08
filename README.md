@@ -2,6 +2,14 @@
 
 JoblyFit is a web application that analyzes your resume against a job description using AI to provide personalized feedback on how well your qualifications match the role. All processing happens locally on your machine, ensuring your personal data remains private and secure.
 
+**Demo Video:**
+
+![JoblyFit Demo](Assets/JoblyFit%20-%20Demo.mp4)
+
+**n8n Workflow Setup Screenshot:**
+
+![n8n Demo](Assets/Joblyfit-n8n-Demo.png)
+
 ## Features
 
 - **Resume Upload**: Upload your resume in PDF, DOC, or DOCX format
