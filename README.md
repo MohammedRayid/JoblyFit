@@ -4,7 +4,7 @@ JoblyFit is a web application that analyzes your resume against a job descriptio
 
 **Demo Video:**
 
-![JoblyFit Demo](https://github.com/user-attachments/assets/cf1e0d7e-d6e9-4355-b37f-166fb1affb70)
+https://github.com/user-attachments/assets/7f18ab9e-d6bb-4f4b-b102-b11b3469f47a
 
 **n8n Workflow Setup Screenshot:**
 
